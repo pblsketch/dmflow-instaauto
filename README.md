@@ -8,6 +8,10 @@ ManyChat 같은 유료 서비스 대신, **내 Vercel + 내 Supabase**에서 무
 > 💡 **코딩을 몰라도 됩니다.** [📖 설치 가이드 (docs/setup-guide.md)](docs/setup-guide.md) 를 순서대로 따라 하면 약 30분 안에 완성됩니다.
 > 인스타그램 프로페셔널(비즈니스/크리에이터) 계정과 무료 Supabase·Vercel·Meta 개발자 계정만 있으면 됩니다.
 
+<p align="center">
+  <img src="docs/images/landing-hero.png" alt="dmflow — 내 DM은, 알아서 답장" width="90%" />
+</p>
+
 ---
 
 ## ✨ 이런 걸 할 수 있어요
