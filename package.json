@@ -1,7 +1,8 @@
 {
-  "name": "my-v0-project",
+  "name": "dmflow",
   "version": "0.1.0",
   "private": true,
+  "description": "dmflow — 내 인스타그램 계정용 DM·댓글·스토리 자동 답장 도구. 셀프호스팅 (Next.js + Supabase + Vercel)",
   "scripts": {
     "build": "next build",
     "dev": "next dev",

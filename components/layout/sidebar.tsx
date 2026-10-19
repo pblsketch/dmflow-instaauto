@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const NAV = [
-  { href: "/dashboard", label: "Home", icon: "/icons/home.svg" },
-  { href: "/dashboard/automations", label: "Auto replies", icon: "/icons/journal.svg" },
-  { href: "/dashboard/inbox", label: "Conversations", icon: "/icons/chat.svg" },
-  { href: "/dashboard/ice-breakers", label: "Conversation starters", icon: "/icons/squads.svg" },
-  { href: "/dashboard/analytics", label: "Insights", icon: "/icons/analytics.svg" },
+  { href: "/dashboard", label: "홈", icon: "/icons/home.svg" },
+  { href: "/dashboard/automations", label: "자동 답장", icon: "/icons/journal.svg" },
+  { href: "/dashboard/inbox", label: "대화", icon: "/icons/chat.svg" },
+  { href: "/dashboard/ice-breakers", label: "아이스 브레이커", icon: "/icons/squads.svg" },
+  { href: "/dashboard/analytics", label: "인사이트", icon: "/icons/analytics.svg" },
 ]
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -36,16 +36,16 @@ export function Sidebar({ className, username = "creator", profilePic, onLogout,
   return (
     <aside className={cn("flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground", className)} {...props}>
       <div className={cn("flex h-16 items-center border-b border-sidebar-border", collapsed ? "justify-center" : "px-3")}>
-        <Link href="/dashboard" onClick={onNavigate} aria-label="insta-p8 home" className={cn("flex items-center gap-2.5 rounded-lg", !collapsed && "px-2")}>
+        <Link href="/dashboard" onClick={onNavigate} aria-label="dmflow 홈" className={cn("flex items-center gap-2.5 rounded-lg", !collapsed && "px-2")}>
           <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><Zap className="size-4" /></span>
-          {!collapsed && <span className="text-sm font-semibold tracking-tight">insta-p8</span>}
+          {!collapsed && <span className="text-sm font-semibold tracking-tight">dmflow</span>}
         </Link>
-        {!collapsed && onToggle && <button onClick={onToggle} aria-label="Collapse sidebar" title="Collapse sidebar" className="ml-auto flex size-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"><ChevronLeft className="size-4" /></button>}
+        {!collapsed && onToggle && <button onClick={onToggle} aria-label="사이드바 접기" title="사이드바 접기" className="ml-auto flex size-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"><ChevronLeft className="size-4" /></button>}
       </div>
 
-      {collapsed && onToggle && <div className="px-3 pt-3"><button onClick={onToggle} aria-label="Expand sidebar" title="Expand sidebar" className="flex size-10 w-full items-center justify-center rounded-lg text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"><ChevronRight className="size-4" /></button></div>}
+      {collapsed && onToggle && <div className="px-3 pt-3"><button onClick={onToggle} aria-label="사이드바 펼치기" title="사이드바 펼치기" className="flex size-10 w-full items-center justify-center rounded-lg text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"><ChevronRight className="size-4" /></button></div>}
 
-      <nav className="flex-1 space-y-1 px-3 py-3" aria-label="Dashboard navigation">
+      <nav className="flex-1 space-y-1 px-3 py-3" aria-label="대시보드 내비게이션">
         {NAV.map(item => {
           const active = pathname === item.href
           return <Link key={item.href} href={item.href} onClick={onNavigate} aria-current={active ? "page" : undefined} aria-label={collapsed ? item.label : undefined} title={collapsed ? item.label : undefined} className={itemClass(active)}>
@@ -56,23 +56,23 @@ export function Sidebar({ className, username = "creator", profilePic, onLogout,
 
         <div className="my-3 h-px bg-sidebar-border" />
 
-        <Link href="/dashboard/settings" onClick={onNavigate} aria-current={pathname === "/dashboard/settings" ? "page" : undefined} aria-label={collapsed ? "Preferences" : undefined} title={collapsed ? "Preferences" : undefined} className={itemClass(pathname === "/dashboard/settings")}>
+        <Link href="/dashboard/settings" onClick={onNavigate} aria-current={pathname === "/dashboard/settings" ? "page" : undefined} aria-label={collapsed ? "설정" : undefined} title={collapsed ? "설정" : undefined} className={itemClass(pathname === "/dashboard/settings")}>
           <img src="/icons/profile.svg" alt="" className="size-4 shrink-0 dark:invert" />
-          {!collapsed && <span>Preferences</span>}
+          {!collapsed && <span>설정</span>}
         </Link>
-        <a href="https://t.me/instagramautomationp8" target="_blank" rel="noopener noreferrer" aria-label={collapsed ? "Help and support" : undefined} title={collapsed ? "Help and support" : undefined} className={itemClass(false)}>
+        <a href="https://github.com/pblsketch/dmflow-instaauto" target="_blank" rel="noopener noreferrer" aria-label={collapsed ? "도움말" : undefined} title={collapsed ? "도움말 (GitHub)" : undefined} className={itemClass(false)}>
           <LifeBuoy className="size-4 shrink-0" />
-          {!collapsed && <span>Help and support</span>}
+          {!collapsed && <span>도움말</span>}
         </a>
       </nav>
 
       <div className="border-t border-sidebar-border p-3">
-        {!collapsed && <div className="mb-3 flex items-center justify-between px-1"><span className="text-xs text-muted-foreground">Appearance</span><ThemeToggle className="h-7 w-14" /></div>}
+        {!collapsed && <div className="mb-3 flex items-center justify-between px-1"><span className="text-xs text-muted-foreground">테마</span><ThemeToggle className="h-7 w-14" /></div>}
         <div className={cn("flex items-center rounded-lg bg-sidebar-accent p-2", collapsed ? "justify-center" : "gap-2.5")}>
           <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-sidebar-primary text-xs font-semibold text-sidebar-primary-foreground">
             {profilePic ? <img src={profilePic} alt={username} className="size-full object-cover" /> : username.charAt(0).toUpperCase()}
           </div>
-          {!collapsed && <><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">@{username}</p><p className="mt-0.5 text-[11px] text-muted-foreground">Instagram connected</p></div><button onClick={onLogout} aria-label="Log out" title="Log out" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-sidebar hover:text-destructive"><LogOut className="size-4" /></button></>}
+          {!collapsed && <><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">@{username}</p><p className="mt-0.5 text-[11px] text-muted-foreground">인스타그램 연결됨</p></div><button onClick={onLogout} aria-label="로그아웃" title="로그아웃" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-sidebar hover:text-destructive"><LogOut className="size-4" /></button></>}
         </div>
       </div>
     </aside>

@@ -80,7 +80,7 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                     conversation_id: conversationId!,
                     user_id: userId,
                     sender_id: "me",
-                    sender_username: "Me",
+                    sender_username: "나",
                     content: text,
                     is_from_instagram: false,
                     created_at: new Date().toISOString()
@@ -102,9 +102,9 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                     <Send className="w-6 h-6 text-muted-foreground" />
                 </div>
                 <div>
-                    <h3 className="text-lg font-semibold text-foreground">Your conversations</h3>
+                    <h3 className="text-lg font-semibold text-foreground">대화 목록</h3>
                     <p className="text-muted-foreground text-sm max-w-xs mx-auto mt-2">
-                        Select a conversation from the left to start chatting live with your audience.
+                        왼쪽에서 대화를 선택하면 실시간으로 답장할 수 있습니다.
                     </p>
                 </div>
             </div>
@@ -126,14 +126,14 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                         <h3 className="font-bold text-foreground text-sm truncate">@{recipientName}</h3>
                         <span className="hidden md:flex items-center gap-1.5 text-[10px] text-success">
                             <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-                            Online via Instagram
+                            Instagram 연결됨
                         </span>
                     </div>
                 </div>
                 <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hidden md:flex" aria-label="Call"><Phone className="w-4 h-4" /></Button>
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hidden md:flex" aria-label="Video"><Video className="w-4 h-4" /></Button>
-                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" aria-label="More"><MoreVertical className="w-4 h-4" /></Button>
+                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hidden md:flex" aria-label="통화"><Phone className="w-4 h-4" /></Button>
+                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hidden md:flex" aria-label="영상통화"><Video className="w-4 h-4" /></Button>
+                    <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" aria-label="더 보기"><MoreVertical className="w-4 h-4" /></Button>
                 </div>
             </div>
 
@@ -172,7 +172,7 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
             {/* Automation Popup */}
             {isAutomationOpen && (
                 <div className="absolute bottom-20 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-popover border border-border rounded-xl shadow-lg p-2 z-50">
-                    <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Quick Responses</div>
+                    <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">빠른 답장</div>
                     <div className="max-h-60 overflow-y-auto space-y-1">
                         {automations.map(auto => (
                             <button
@@ -185,7 +185,7 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                             </button>
                         ))}
                         {automations.length === 0 && (
-                            <div className="px-3 py-4 text-center text-muted-foreground text-xs">No automations found.</div>
+                            <div className="px-3 py-4 text-center text-muted-foreground text-xs">사용할 자동 답장이 없습니다.</div>
                         )}
                     </div>
                 </div>
@@ -198,7 +198,7 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                         size="icon"
                         variant="ghost"
                         onClick={() => setIsAutomationOpen(!isAutomationOpen)}
-                        aria-label="Toggle quick responses"
+                        aria-label="빠른 답장 열기/닫기"
                         className={cn(
                             "h-9 w-9 hover:bg-accent text-muted-foreground hover:text-accent-yellow-foreground dark:hover:text-accent-yellow transition-colors shrink-0",
                             isAutomationOpen && "text-foreground bg-accent"
@@ -208,7 +208,7 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                     </Button>
                     <input
                         className="flex-1 bg-muted px-3 py-2 text-sm text-foreground focus:outline-none placeholder:text-muted-foreground min-w-0"
-                        placeholder="Type a message..."
+                        placeholder="메시지를 입력하세요..."
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
                         onKeyDown={(e) => {
@@ -223,7 +223,7 @@ export function ChatWindow({ conversationId, recipientId, recipientName, userId,
                         onClick={() => handleSendMessage()}
                         disabled={sending || !inputText.trim()}
                         size="icon"
-                        aria-label="Send message"
+                        aria-label="메시지 보내기"
                         className="h-9 w-9 bg-primary text-primary-foreground hover:opacity-90 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
                     >
                         {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}

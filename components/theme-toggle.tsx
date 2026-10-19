@@ -86,7 +86,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         )}
       </span>
       {/* Hidden but readable label for assistive tech that ignores aria-label */}
-      <span className="sr-only">{isDark ? "Dark theme enabled" : "Light theme enabled"}</span>
+      <span className="sr-only">{isDark ? "다크 테마 사용 중" : "라이트 테마 사용 중"}</span>
     </button>
   )
 }

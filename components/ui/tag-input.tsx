@@ -26,7 +26,8 @@ export function TagInput({ value, onChange, placeholder, className }: TagInputPr
     }
 
     const addTag = () => {
-        const trimmed = inputValue.trim().toLowerCase()
+        // Preserve original casing — used for both keywords and public reply phrases.
+        const trimmed = inputValue.trim()
         if (trimmed && !value.includes(trimmed)) {
             onChange([...value, trimmed])
             setInputValue("")

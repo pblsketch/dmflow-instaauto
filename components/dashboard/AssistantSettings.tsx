@@ -69,19 +69,19 @@ export function AssistantSettings({ userId }: { userId: string }) {
     }
 
 
-return <details className="mt-6 border-t border-border pt-4"><summary className="cursor-pointer text-xs text-muted-foreground">AI assistant settings</summary><div className="mt-4 flex items-center gap-3"><button type="button" disabled={aiLoading || aiToggling} onClick={handleToggleAI} className="rounded-lg border border-border bg-card px-3 py-2 text-xs">{aiLoading ? "Loading…" : aiToggling ? "Saving…" : aiEnabled ? "AI enabled · Turn off" : "AI disabled · Turn on"}</button><button type="button" onClick={() => setShowAiContext(!showAiContext)} className="text-xs underline">Configure assistant</button></div>{showAiContext && (
+return <details className="mt-6 border-t border-border pt-4"><summary className="cursor-pointer text-xs text-muted-foreground">AI 도우미 설정</summary><div className="mt-4 flex items-center gap-3"><button type="button" disabled={aiLoading || aiToggling} onClick={handleToggleAI} className="rounded-lg border border-border bg-card px-3 py-2 text-xs">{aiLoading ? "불러오는 중…" : aiToggling ? "저장 중…" : aiEnabled ? "AI 켜짐 · 끄기" : "AI 꺼짐 · 켜기"}</button><button type="button" onClick={() => setShowAiContext(!showAiContext)} className="text-xs underline">도우미 설정</button></div>{showAiContext && (
                     <div className="rounded-xl border border-border bg-card p-5 animate-in fade-in slide-in-from-top-2 duration-200 space-y-4">
                         <div className="flex items-center gap-2">
                             <Brain className="w-4 h-4" />
-                            <span className="text-sm font-semibold">AI assistant settings</span>
+                            <span className="text-sm font-semibold">AI 도우미 설정</span>
                         </div>
 
                         {/* API Key */}
                         <div className="space-y-1.5">
                             <div className="flex items-center justify-between">
-                                <label className="text-xs text-neutral-400 font-medium">API Key</label>
+                                <label className="text-xs text-neutral-400 font-medium">API 키</label>
                                 {hasApiKey && !showApiKey && (
-                                    <span className="text-[10px] text-emerald-500 font-mono">● key saved</span>
+                                    <span className="text-[10px] text-emerald-500 font-mono">● 키 저장됨</span>
                                 )}
                             </div>
                             {showApiKey || !hasApiKey ? (
@@ -90,11 +90,11 @@ return <details className="mt-6 border-t border-border pt-4"><summary className=
                                         type="password"
                                         value={groqApiKey}
                                         onChange={e => setGroqApiKey(e.target.value)}
-                                        placeholder={hasApiKey ? "Enter new key to replace…" : "sk_… or gsk_…"}
+                                        placeholder={hasApiKey ? "교체할 새 키를 입력하세요…" : "sk_… 또는 gsk_…"}
                                         className="flex-1 bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring font-mono"
                                     />
                                     {hasApiKey && (
-                                        <button onClick={() => setShowApiKey(false)} className="px-3 py-2.5 rounded-xl border border-white/10 text-neutral-500 text-xs hover:text-white transition-colors">Cancel</button>
+                                        <button onClick={() => setShowApiKey(false)} className="px-3 py-2.5 rounded-xl border border-white/10 text-neutral-500 text-xs hover:text-white transition-colors">취소</button>
                                     )}
                                 </div>
                             ) : (
@@ -102,44 +102,44 @@ return <details className="mt-6 border-t border-border pt-4"><summary className=
                                     onClick={() => setShowApiKey(true)}
                                     className="w-full text-left px-4 py-2.5 rounded-xl border border-white/10 text-neutral-500 text-sm hover:border-white/20 hover:text-white transition-colors"
                                 >
-                                    •••••••••••••••••••• <span className="text-xs ml-2 text-neutral-600">click to replace</span>
+                                    •••••••••••••••••••• <span className="text-xs ml-2 text-neutral-600">클릭해서 교체</span>
                                 </button>
                             )}
                         </div>
 
                         {/* API Base URL */}
                         <div className="space-y-1.5">
-                            <label className="text-xs text-neutral-400 font-medium">API Base URL <span className="text-neutral-600 font-normal">(optional)</span></label>
+                            <label className="text-xs text-neutral-400 font-medium">API 기본 URL <span className="text-neutral-600 font-normal">(선택)</span></label>
                             <input
                                 type="text"
                                 value={aiBaseUrl}
                                 onChange={e => setAiBaseUrl(e.target.value)}
-                                placeholder="https://api.groq.com/v1  (default) or your own endpoint"
+                                placeholder="https://api.groq.com/v1  (기본값) 또는 직접 만든 엔드포인트"
                                 className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring font-mono"
                             />
-                            <p className="text-[11px] text-neutral-600">Any OpenAI-compatible endpoint works — Groq, OpenAI, Together, your own proxy.</p>
+                            <p className="text-[11px] text-neutral-600">OpenAI 호환 엔드포인트면 어디든 됩니다 — Groq, OpenAI, Together, 직접 만든 프록시 등.</p>
                         </div>
 
                         {/* Model */}
                         <div className="space-y-1.5">
-                            <label className="text-xs text-neutral-400 font-medium">Model <span className="text-neutral-600 font-normal">(optional)</span></label>
+                            <label className="text-xs text-neutral-400 font-medium">모델 <span className="text-neutral-600 font-normal">(선택)</span></label>
                             <input
                                 type="text"
                                 value={aiModel}
                                 onChange={e => setAiModel(e.target.value)}
-                                placeholder="llama-3.1-8b-instant  (Groq default)"
+                                placeholder="llama-3.1-8b-instant  (Groq 기본값)"
                                 className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring font-mono"
                             />
                         </div>
 
                         {/* AI Personality Context */}
                         <div className="space-y-1.5">
-                            <label className="text-xs text-neutral-400 font-medium">AI Personality Context</label>
-                            <p className="text-[11px] text-neutral-600">Tell AI about your account — niche, products, tone, what to say/avoid.</p>
+                            <label className="text-xs text-neutral-400 font-medium">AI 성격·말투 설정</label>
+                            <p className="text-[11px] text-neutral-600">계정 정보(분야, 상품, 말투, 하면 좋은 말/피할 말)를 알려주세요.</p>
                             <textarea
                                 value={aiContext}
                                 onChange={e => setAiContext(e.target.value)}
-                                placeholder={`e.g. This is a fitness coaching account. I sell online training programs (₹2999/mo). My tone is motivating but chill. If someone asks about pricing, tell them to DM for a free consultation. Never promise specific results.`}
+                                placeholder={`예: 이 계정은 고등학교 국어 수업 자료를 공유합니다. 자료 요청이 오면 링크를 안내하고, 문의는 DM으로 답하도록 안내하세요. 항상 정중하고 친근한 말투로, 짧게 답하세요.`}
                                 rows={4}
                                 className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground resize-none focus:outline-none focus:ring-2 focus:ring-ring"
                             />
@@ -150,7 +150,7 @@ return <details className="mt-6 border-t border-border pt-4"><summary className=
                             disabled={aiContextSaving}
                             className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium disabled:opacity-50"
                         >
-                            {aiContextSaving ? 'Saving...' : aiContextSaved ? 'Saved ✓' : 'Save'}
+                            {aiContextSaving ? '저장 중...' : aiContextSaved ? '저장됨 ✓' : '저장'}
                         </button>
                     </div>
                 )}</details>

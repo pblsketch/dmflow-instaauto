@@ -5,12 +5,12 @@ import { Save, Loader2, Check } from "lucide-react"
 import { useInstagramSession } from "@/hooks/use-instagram-session"
 
 const fields = [
-    ["business_name", "Business name", "What should customers call your business?"],
-    ["business_description", "What you do", "Describe your business and main offer."],
-    ["services", "Services and prices", "List services, products, prices, and key details."],
-    ["hours_location", "Hours and location", "Add opening hours, location, delivery, or service area."],
-    ["policies", "Policies", "Add booking, refund, cancellation, and payment policies."],
-    ["faq", "Frequently asked questions", "Add common customer questions and approved answers."],
+    ["business_name", "상호명", "고객에게 보여줄 이름은 무엇인가요?"],
+    ["business_description", "무엇을 하는 곳인지", "운영하는 곳과 주요 상품·서비스를 설명해 주세요."],
+    ["services", "서비스와 가격", "서비스, 상품, 가격과 주요 정보를 적어 주세요."],
+    ["hours_location", "영업시간과 위치", "영업시간, 위치, 배송 또는 서비스 지역을 적어 주세요."],
+    ["policies", "정책", "예약, 환불, 취소, 결제 정책을 적어 주세요."],
+    ["faq", "자주 묻는 질문", "고객이 자주 묻는 질문과 답변을 적어 주세요."],
 ] as const
 
 export default function SettingsPage() {
@@ -50,9 +50,9 @@ export default function SettingsPage() {
     return (
         <div className="mx-auto max-w-4xl px-5 py-7 sm:px-8 lg:px-10">
             <div className="border-b border-border pb-7">
-                <p className="text-sm text-muted-foreground">Workspace settings</p>
-                <h1 className="mt-1 text-3xl font-semibold tracking-[-0.03em] text-foreground">Preferences</h1>
-                <p className="mt-2 text-sm text-muted-foreground">Give your assistant accurate business information for better replies.</p>
+                <p className="text-sm text-muted-foreground">작업 공간 설정</p>
+                <h1 className="mt-1 text-3xl font-semibold tracking-[-0.03em] text-foreground">설정</h1>
+                <p className="mt-2 text-sm text-muted-foreground">더 정확한 자동 답장을 위해 비즈니스 정보를 입력해 주세요.</p>
             </div>
             <div className="mt-7 space-y-5 rounded-xl border border-border bg-card p-6">
                 {fields.map(([key, label, placeholder]) => (
@@ -64,7 +64,7 @@ export default function SettingsPage() {
             </div>
             <button onClick={save} disabled={saving} className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground disabled:opacity-60">
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-                {saved ? "Saved" : "Save business knowledge"}
+                {saved ? "저장됨" : "설정 저장"}
             </button>
         </div>
     )

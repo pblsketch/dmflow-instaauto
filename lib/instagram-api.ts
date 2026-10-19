@@ -78,11 +78,11 @@ export function buildFollowGateCard(params: {
   subtitle?: string
 }): IGCard {
   return {
-    title: params.title ?? "Before you lose me",
-    subtitle: params.subtitle ?? `Follow @${params.username} to unlock this content!`,
+    title: params.title ?? "🔒 팔로우 확인",
+    subtitle: params.subtitle ?? `@${params.username} 님을 팔로우하면 바로 보내드려요!`,
     buttons: [
-      { type: "web_url", url: `https://instagram.com/${params.username}`, title: "Follow" },
-      { type: "postback", title: "I Followed! ✅", payload: `UNLOCK_CONTENT_${params.ruleId}` },
+      { type: "web_url", url: `https://instagram.com/${params.username}`, title: "팔로우 하기" },
+      { type: "postback", title: "팔로우 했어요 ✅", payload: `UNLOCK_CONTENT_${params.ruleId}` },
     ],
   }
 }
