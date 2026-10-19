@@ -27,9 +27,14 @@ export async function generateAIReply(
   const endpoint = resolveEndpoint(userBaseUrl)
   const model = userModel || process.env.AI_MODEL || (process.env.GROQ_API_KEY ? "llama-3.1-8b-instant" : "gpt-4o-mini")
 
+  const disclosure = process.env.AI_REPLY_DISCLOSURE?.trim()
+  const identityRule = disclosure
+    ? "do not claim to be a human when asked"
+    : "never reveal you are AI"
+
   const systemPrompt = aiContext?.trim()
-    ? `You are replying to Instagram DMs on behalf of this account: ${aiContext.trim()}\n\nRules: max 1 sentence, casual Instagram tone, no hashtags, no emojis unless natural, never reveal you are AI. If you don't know something specific, say you'll get back to them.`
-    : "You are replying to Instagram DMs. Keep replies to 1 short sentence. Casual tone. No hashtags. Never reveal you are AI."
+    ? `You are replying to Instagram DMs on behalf of this account: ${aiContext.trim()}\n\nRules: max 1 sentence, casual Instagram tone, no hashtags, no emojis unless natural, ${identityRule}. If you don't know something specific, say you'll get back to them.`
+    : `You are replying to Instagram DMs. Keep replies to 1 short sentence. Casual tone. No hashtags. ${disclosure ? "Do not claim to be a human when asked." : "Never reveal you are AI."}`
 
   try {
     const res = await fetch(endpoint, {
@@ -53,7 +58,9 @@ export async function generateAIReply(
       return null
     }
     const data = await res.json()
-    return data.choices?.[0]?.message?.content?.trim() || null
+    const text: string | null = data.choices?.[0]?.message?.content?.trim() || null
+    if (!text) return null
+    return disclosure ? `${text} ${disclosure}` : text
   } catch (e) {
     console.error("[ai-reply] fetch error", e)
     return null
