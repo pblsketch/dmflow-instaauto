@@ -141,6 +141,51 @@ function responsePreviewText(content: any): string {
 }
 
 // ============================================================
+// Webhook idempotency
+// Meta can deliver the same event more than once (and retries on timeouts).
+// Claim each event key once so duplicate deliveries cannot produce duplicate
+// replies. If the dedupe table is unavailable (e.g. before migration), we
+// fail open and process the event so replies are never lost.
+// ============================================================
+async function claimEvent(supabase: any, key: string): Promise<boolean> {
+  try {
+    const { error } = await supabase.from("processed_webhook_events").insert({ key })
+    if (!error) {
+      // Opportunistic cleanup: keys older than 7 days are no longer useful.
+      if (Math.random() < 0.02) {
+        const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+        supabase
+          .from("processed_webhook_events")
+          .delete()
+          .lt("created_at", cutoff)
+          .then(() => {}, () => {})
+      }
+      return true
+    }
+    if (error.code === "23505") return false
+    console.warn(`[webhook] dedupe unavailable (${error.message}) — processing anyway`)
+    return true
+  } catch (e) {
+    console.warn("[webhook] dedupe error — processing anyway", e)
+    return true
+  }
+}
+
+function messagingEventKey(event: any): string | null {
+  const mid = event.message?.mid || event.postback?.mid || event.reaction?.mid
+  if (mid) return `msg:${mid}`
+  const ts = event.timestamp
+  const sender = event.sender?.id
+  if (!ts || !sender) return null
+  const kind = event.postback
+    ? `postback:${event.postback.payload || ""}`
+    : event.reaction
+      ? "reaction"
+      : "event"
+  return `evt:${ts}:${sender}:${kind}`
+}
+
+// ============================================================
 // Instagram API Helper: Verifies actual follow status
 // API: GET https://graph.instagram.com/v21.0/{recipientId}?fields=is_user_follow_business
 // Returns:
@@ -295,6 +340,9 @@ export async function POST(request: NextRequest) {
 
           if (senderId === webhookId || senderId === user.business_account_id || senderId === user.page_id) continue
 
+          // Idempotency: skip duplicate deliveries of the same comment event.
+          if (!(await claimEvent(supabase, `comment:${commentId}`))) continue
+
           const commentAutomations = automations.filter((a: any) => a.trigger_source === "comment")
 
           // Priority: specific post reply-all → specific post keyword → global keyword
@@ -428,6 +476,10 @@ export async function POST(request: NextRequest) {
           const recipientId = event.recipient.id
           if (event.read || event.delivery || event.message?.is_echo || senderId === recipientId) continue
 
+          // Idempotency: skip duplicate deliveries of the same story event.
+          const storyKey = messagingEventKey(event)
+          if (storyKey && !(await claimEvent(supabase, `story:${storyKey}`))) continue
+
           const storyAutomations = automations.filter((a: any) => a.trigger_source === "story")
           if (storyAutomations.length === 0) continue
 
@@ -513,6 +565,10 @@ export async function POST(request: NextRequest) {
 
           const senderId = event.sender.id
           if (senderId === webhookId || senderId === user.business_account_id || senderId === user.page_id) continue
+
+          // Idempotency: skip duplicate deliveries of the same DM event.
+          const dmKey = messagingEventKey(event)
+          if (dmKey && !(await claimEvent(supabase, `dm:${dmKey}`))) continue
 
           let triggerType = ""
           let triggerValue = ""

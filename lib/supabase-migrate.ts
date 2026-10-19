@@ -23,6 +23,7 @@ const EXPECTED_TABLES = [
   "conversations",
   "messages",
   "webhook_events",
+  "processed_webhook_events",
   "automations",
   "media_cache",
   "ice_breakers",

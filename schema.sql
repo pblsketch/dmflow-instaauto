@@ -80,6 +80,17 @@ CREATE TABLE IF NOT EXISTS public.webhook_events (
 );
 
 -- ==========================================
+-- 4b. Table: public.processed_webhook_events
+-- Webhook idempotency: Meta may retry deliveries. Each event key is claimed
+-- once so duplicate deliveries cannot produce duplicate replies.
+-- ==========================================
+CREATE TABLE IF NOT EXISTS public.processed_webhook_events (
+  key TEXT PRIMARY KEY,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_processed_webhook_events_created ON public.processed_webhook_events(created_at);
+
+-- ==========================================
 -- 5. Table: public.automations
 -- ==========================================
 CREATE TABLE IF NOT EXISTS public.automations (
@@ -390,6 +401,7 @@ ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.conversations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.webhook_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.processed_webhook_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.automations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.media_cache ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.ice_breakers ENABLE ROW LEVEL SECURITY;
