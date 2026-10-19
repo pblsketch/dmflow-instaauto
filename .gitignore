@@ -23,6 +23,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local dev tool configs (kept out of the public repo)
+.mcp.json
+.codex/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
