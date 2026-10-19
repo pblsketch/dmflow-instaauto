@@ -83,6 +83,7 @@ npm run dev                  # http://localhost:3000
 | `META_APP_SECRET` | 선택 | 웹훅 서명 검증 401 오류가 날 때만 (Settings → Basic의 앱 시크릿) |
 | `GROQ_API_KEY` | 선택 | AI 자동 답장 사용 시 |
 | `AGENT_API_KEY` | 선택 | Muse·MCP 같은 AI 에이전트 연동 시 |
+| `AI_REPLY_DISCLOSURE` | 선택 | AI 답장 끝에 붙일 자동 응답 고지 문구 (예: "🤖 자동 응답입니다") |
 | `PRIVACY_CONTACT_EMAIL` | 선택 | /privacy 페이지에 표시할 문의 이메일 |
 
 자세한 설명: [`.env.example`](.env.example) · [설치 가이드](docs/setup-guide.md#3단계-vercel에-배포하기-10분)
@@ -110,7 +111,7 @@ npm run dev                  # http://localhost:3000
 - **여러 인스타 계정을 관리할 수 있나요?** — 이 앱은 1인 1계정 설계입니다. 계정마다 각각 배포하세요.
 - **배포했는데 503 "Auth not configured"가 떠요** — `DASH_USER`/`DASH_PASS` 미설정이 원인입니다. Vercel → Settings → Environment Variables에 추가 후 Redeploy.
 - **웹훅 검증이 실패해요** — `INSTAGRAM_WEBHOOK_VERIFY_TOKEN`이 Meta에 입력한 값과 같은지, 배포 주소가 맞는지 확인. [문제 해결 표](docs/setup-guide.md#문제-해결) 참고.
-- **봇으로 정지되지 않나요?** — 공식 API + 사용자 행동(메시지/댓글)에만 반응하는 방식이라 정책에 부합합니다. 단, 스팸성 사용은 인스타 정책 위반입니다.
+- **봇으로 정지되지 않나요?** — 공식 API만 사용하고 먼저 온 행동에만 반응해서 정책 범위 안에서 동작합니다. 다만 공식 API라도 계정 이력·활동량·동작 종류에 따라 제한될 수 있어요. 새 계정에 바로 붙이지 말고 소량으로 시작하세요. 자세한 수칙은 [설치 가이드의 안전 수칙](docs/setup-guide.md#안전하게-쓰기-계정-제한-예방)을 참고하세요.
 
 ## 🔄 업데이트 방법
 
