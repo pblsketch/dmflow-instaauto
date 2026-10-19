@@ -37,7 +37,7 @@ function isValidSignature(rawBody: string, signatureHeader: string | null): bool
   })
 }
 
-const DEFAULT_PUBLIC_REPLIES = ["Check your DMs! 📥", "Sent! 🔥", "Check inbox! ✨"]
+const DEFAULT_PUBLIC_REPLIES = ["DM 보냈어요! 📥", "확인해 주세요! ✨", "메시지함을 확인해 주세요 💌"]
 
 // Max times we'll send the gate card for an unverifiable follow status on a single unlock event.
 // After this, we send a single "couldn't verify your follow" message and stop spamming the user.
@@ -80,10 +80,15 @@ function keywordMatches(triggerValue: string, text: string): boolean {
     .map((k: string) => k.trim())
     .filter(Boolean)
     .some((k: string) => {
+      // Regex \b word boundaries only work for ASCII word characters.
+      // Korean (and other non-ASCII) keywords must use substring matching.
+      if (!/^[\x00-\x7F]+$/.test(k)) {
+        return text.toLowerCase().includes(k.toLowerCase())
+      }
       try {
         return new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(text)
       } catch {
-        return text.includes(k.toLowerCase())
+        return text.toLowerCase().includes(k.toLowerCase())
       }
     })
 }
@@ -672,6 +677,34 @@ export async function POST(request: NextRequest) {
                     // ---------- Follow gate for DMs ----------
                     const attemptKey = unlockKey(senderId, match.id)
 
+                    // 팔로우 게이트(게이트-퍼스트): 첫 트리거에서는 항상 "팔로우 했어요" 버튼 카드를 먼저 보냅니다.
+                    // 실제 내용은 버튼 탭(UNLOCK_CONTENT_*) 후 팔로우가 확인된 경우에만 전달됩니다.
+                    if (content.check_follow === true && !isUnlockEvent) {
+                      await clearUnlockAttempts(attemptKey)
+                      const gateResult = await sendCardDM(
+                        user.access_token,
+                        { id: senderId },
+                        buildFollowGateCard({ username: user.username, ruleId: match.id }),
+                      )
+                      const gateConv = await incomingSaved
+                      if (gateResult?.ok && gateConv) {
+                        try {
+                          await supabase.from("messages").insert({
+                            id: `mid_gate_${Date.now()}_${Math.random()}`,
+                            conversation_id: gateConv.id,
+                            user_id: user.id,
+                            sender_id: user.business_account_id,
+                            sender_username: user.username,
+                            content: "[팔로우 확인 카드 발송]",
+                            is_from_instagram: false,
+                          })
+                        } catch (e) {
+                          console.error("[webhook] Failed to save outgoing message", e)
+                        }
+                      }
+                      continue
+                    }
+
                     if (content.check_follow === true) {
                       if (isUnlockEvent) {
                         // Explicit unlock path: user tapped "I Followed!" — re-verify before delivering.
@@ -702,7 +735,7 @@ export async function POST(request: NextRequest) {
                         } else if (followResult.follows === false) {
                           await clearUnlockAttempts(attemptKey)
                           console.log(`[webhook] ❌ DM unlock rejected: @${senderId} still doesn't follow`)
-                          const result = await sendCardDM(user.access_token, { id: senderId }, buildFollowGateCard({ username: user.username, ruleId: match.id, title: "❌ Not Following Yet!", subtitle: `We couldn't verify your follow. Please follow @${user.username} and click the button again.` }))
+                          const result = await sendCardDM(user.access_token, { id: senderId }, buildFollowGateCard({ username: user.username, ruleId: match.id, title: "❌ 아직 팔로우 전이에요!", subtitle: `팔로우가 아직 확인되지 않았어요. @${user.username} 님을 팔로우한 뒤 버튼을 다시 눌러주세요.` }))
                           const conv = await incomingSaved
                           if (result?.ok && conv) {
                             try {
@@ -728,7 +761,7 @@ export async function POST(request: NextRequest) {
                                                     const result = await sendTextDM(
                                                       user.access_token,
                                                       { id: senderId },
-                                                      "⚠️ We couldn't verify your follow yet. Please reach out if this keeps happening.",
+                                                      "⚠️ 팔로우를 아직 확인하지 못했어요. 계속 안 되면 문의해 주세요.",
                                                     )
                                                     const conv = await incomingSaved
                                                     if (result?.ok && conv) {
@@ -748,7 +781,7 @@ export async function POST(request: NextRequest) {
                                                     }
                                                   } else {
                                                     console.warn(`[webhook] ⚠️ DM unlock unverifiable (attempt ${attempts}/${UNLOCK_GATE_MAX_ATTEMPTS}) for @${senderId}`)
-                                                    const result = await sendCardDM(user.access_token, { id: senderId }, buildFollowGateCard({ username: user.username, ruleId: match.id, subtitle: `Please follow @${user.username} to see this!` }))
+                                                    const result = await sendCardDM(user.access_token, { id: senderId }, buildFollowGateCard({ username: user.username, ruleId: match.id, subtitle: `팔로우 확인 후 내용을 보내드려요. @${user.username} 님을 팔로우하고 버튼을 눌러주세요.` }))
                                                     const conv = await incomingSaved
                                                     if (result?.ok && conv) {
                                                       try {
@@ -818,7 +851,7 @@ export async function POST(request: NextRequest) {
                           const isAuthError = followResult.error === 'auth'
                           if (isAuthError) {
                             console.warn(`[webhook] ⚠️ DM follower gate auth failure for @${senderId}; sending gate`)
-                            const result = await sendCardDM(user.access_token, { id: senderId }, buildFollowGateCard({ username: user.username, ruleId: match.id, title: "❌ Verification Failed", subtitle: `We can't verify your follow status. Please follow @${user.username} and try again.` }))
+                            const result = await sendCardDM(user.access_token, { id: senderId }, buildFollowGateCard({ username: user.username, ruleId: match.id, title: "❌ 확인 실패", subtitle: `팔로우 상태를 확인할 수 없어요. @${user.username} 님을 팔로우한 뒤 다시 시도해 주세요.` }))
                             const conv = await incomingSaved
                             if (result?.ok && conv) {
                               try {
