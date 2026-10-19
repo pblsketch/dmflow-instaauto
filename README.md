@@ -1,550 +1,132 @@
-<p align="center">
-  <img src="https://img.shields.io/github/stars/ayuuxh2/insta-p8?style=for-the-badge&color=facc15" alt="GitHub stars" />
-  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Supabase-Postgres-3ECF8E?style=for-the-badge&logo=supabase" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Instagram-Automation-E4405F?style=for-the-badge&logo=instagram" alt="Instagram automation" />
-  <a href="https://www.producthunt.com/products/instaauto?launch=instaauto"><img src="https://img.shields.io/badge/Featured%20on-Product%20Hunt-DA552F?style=for-the-badge&logo=producthunt&logoColor=white" alt="Product Hunt" /></a>
-  <a href="https://discord.gg/7J9E7bNvX"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
-  <a href="https://t.me/instagramautomationp8"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Group" /></a>
-</p>
+# ⚡ dmflow
 
-<h1 align="center">⚡ InstaAuto</h1>
+**내 인스타그램 계정의 DM·댓글·스토리에 자동으로 답장해 주는 나만의 도구.**
+ManyChat 같은 유료 서비스 대신, **내 Vercel + 내 Supabase**에서 무료로 돌리는 셀프호스팅 인스타 자동화입니다.
 
-<p align="center">
-  <strong>Free open-source ManyChat alternative — Instagram DM automation, comment-to-DM funnels, story replies, AI auto-replies, and a live inbox.</strong>
-</p>
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpblsketch%2Fdmflow-instaauto&project-name=dmflow&repository-name=dmflow&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY,NEXT_PUBLIC_INSTAGRAM_APP_ID,INSTAGRAM_APP_ID,INSTAGRAM_APP_SECRET,NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI,INSTAGRAM_WEBHOOK_VERIFY_TOKEN,DASH_USER,DASH_PASS&envLink=https%3A%2F%2Fgithub.com%2Fpblsketch%2Fdmflow-instaauto%2Fblob%2Fmain%2Fdocs%2Fsetup-guide.md)
 
-<p align="center">
-  A self-hosted, AI-ready, developer-friendly alternative to paid Instagram automation tools like ManyChat, Chatfuel, and SendPulse.
-  <br />
-  No monthly SaaS fees. No vendor lock-in. Your data stays in your Supabase.
-</p>
-
-<p align="center">
-  <a href="#-step-by-step-video-setup-guide"><strong>🎬 Video Guide</strong></a> ·
-  <a href="#-live-web-app--testing-access"><strong>Join Web Testers</strong></a> ·
-  <a href="#-quick-start-self-host"><strong>Self Host</strong></a> ·
-  <a href="#-features"><strong>Features</strong></a> ·
-  <a href="#-environment-variables"><strong>Env Setup</strong></a> ·
-  <a href="#-deploy-to-vercel"><strong>Deploy</strong></a> ·
-  <a href="#-faq"><strong>FAQ</strong></a> ·
-  <a href="https://www.producthunt.com/products/instaauto?launch=instaauto"><strong>Product Hunt</strong></a> ·
-  <a href="https://discord.gg/7J9E7bNvX"><strong>Discord</strong></a> ·
-  <a href="https://t.me/instagramautomationp8"><strong>Telegram</strong></a>
-</p>
+> 💡 **코딩을 몰라도 됩니다.** [📖 설치 가이드 (docs/setup-guide.md)](docs/setup-guide.md) 를 순서대로 따라 하면 약 30분 안에 완성됩니다.
+> 인스타그램 프로페셔널(비즈니스/크리에이터) 계정과 무료 Supabase·Vercel·Meta 개발자 계정만 있으면 됩니다.
 
 ---
 
-## 🎬 Step-by-Step Video Setup Guide
+## ✨ 이런 걸 할 수 있어요
 
-Get your self-hosted Instagram automation platform live in under 18 minutes! Follow this step-by-step video tutorial to fork, configure, and deploy the application.
+| 기능 | 설명 |
+|---|---|
+| 💬 **DM 키워드 자동 답장** | "가격"이라고 DM을 보내면 내가 정한 답장이 자동 발송 |
+| 📮 **댓글 → DM 자동 발송** | 게시물·릴스 댓글에 "자료"를 달면 공개 답글 + DM으로 링크/자료 전송 |
+| 🔒 **팔로우 게이트** | 팔로우한 사람에게만 자료 전달. "팔로우 했어요" 버튼 후 자동 확인 |
+| 📖 **스토리 트리거** | 스토리 멘션·답장·이모지 반응에 자동 반응 |
+| 🤖 **AI 자동 답장** | 키워드에 안 걸리는 DM은 AI가 내 사업 정보를 바탕으로 사람처럼 답장 (Groq/OpenAI 호환) |
+| 🧊 **아이스 브레이커** | 인스타 프로필의 대화 시작 버튼 (최대 4개) 관리·동기화 |
+| 📥 **실시간 인박스** | 모든 대화를 한 화면에서 보고, 직접 답장까지 |
+| 📊 **인사이트** | 자동화 수·발송 수·도달 수 통계 |
 
-<p align="center">
-  <a href="https://youtu.be/kIMQe__d37I" target="_blank">
-    <img src="https://img.youtube.com/vi/kIMQe__d37I/0.jpg" alt="InstaAuto Setup Tutorial Video" width="600" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
-  </a>
-</p>
-
-<p align="center">
-  👉 <strong><a href="https://youtu.be/kIMQe__d37I" target="_blank">Click here to watch the full step-by-step tutorial on YouTube</a></strong>
-</p>
-
----
-
-## 🚀 What is InstaAuto?
-
-**InstaAuto** is an open-source Instagram automation platform built for creators, indie hackers, agencies, brands, and developers who want to automate Instagram workflows without paying recurring fees for closed SaaS tools.
-
-Use it to build:
-
-- **Instagram DM automation**
-- **Instagram comment auto-replies**
-- **Instagram story automation**
-- **AI Instagram auto-replies**
-- **Keyword-triggered message funnels**
-- **Live Instagram inbox dashboard**
-- **Instagram Ice Breakers**
-- **Self-hosted ManyChat alternative**
-- **Open-source Instagram chatbot**
-
-If you are searching for a **free ManyChat alternative**, **open-source Instagram DM bot**, **self-hosted Instagram automation tool**, **Instagram AI chatbot**, or **Instagram comment-to-DM automation**, this project is built for that exact use case.
-
----
-
-## 🌐 Live Web App & Testing Access
-
-You have two ways to use InstaAuto:
-
-### Option 1: Join the released web app as a tester
-
-If you do not want to deploy anything yourself, you can request access to the hosted web app and join as a tester.
-
-- **Best for:** creators, small businesses, marketers, beta testers
-- **What you need:** an Instagram Business or Creator account
-- **How it works:** request access, connect Instagram, create automations, test DMs/comments/stories
-
-> The hosted app may require manual approval because Instagram platform permissions and tester roles are controlled through Meta.
-
-### Option 2: Self-host it
-
-If you are a developer or agency, self-host InstaAuto on your own Vercel + Supabase account.
-
-- **Best for:** developers, agencies, privacy-focused teams, power users
-- **You control:** database, tokens, deployment, AI gateway, webhook URL
-- **Cost:** can run on free tiers for small usage
-
----
-
-## � Live Showcase
-
-Try a real Instagram automation demo before self-hosting.
-
-- **Instagram profile:** [@ayuuxh2](https://www.instagram.com/ayuuxh2/)
-- **DM keyword demo:** send `hello` in DMs → bot replies with a welcome message
-- **Comment-to-DM demo:** comment `link` on the demo post → bot public-replies and DMs you the link
-- **Comment-to-DM demo post:** [instagram.com/p/DWb3vuZDxm6](https://www.instagram.com/p/DWb3vuZDxm6/)
-- **Story reply demo:** reply `info` to an active story → bot DMs you back
-
-This showcase helps contributors and testers verify that the open-source Instagram DM automation, comment-to-DM funnels, and story-reply workflow are working in production.
-
-> Please use the demo responsibly. Do not spam the showcase profile or post.
-
----
-
-## �💡 Why not just use ManyChat?
-
-ManyChat is great, but it is closed-source and paid. InstaAuto is for people who want ownership and flexibility.
-
-| Feature | ManyChat | InstaAuto |
-|---|---:|---:|
-| Open source | ❌ | ✅ |
-| Self-hosted | ❌ | ✅ |
-| Monthly SaaS fee | ✅ | ❌ |
-| Own your database | ❌ | ✅ |
-| Custom API routes | Limited | ✅ |
-| AI-native replies | Paid/add-on style | ✅ |
-| Developer extensibility | Limited | ✅ |
-| Supabase/Postgres backend | ❌ | ✅ |
-| Vercel deployable | ❌ | ✅ |
-| Full source code access | ❌ | ✅ |
-
-**Positioning:** InstaAuto is not a drop-in clone. It is an open-source, self-hosted automation base for builders who want to customize Instagram automation deeply.
-
----
-
-## ✨ Features
-
-### 💬 Instagram DM Automation
-
-- Keyword-based DM auto-replies
-- Multi-keyword matching
-- Postback/button payload handling
-- Auto-save incoming DMs to inbox
-- Auto-save outgoing bot replies
-- Live conversation dashboard
-- Manual reply from inbox
-- Rich response cards with buttons
-- Follow-gated locked content flows
-
-### 💭 Instagram Comment Automation
-
-- Auto-reply to Instagram post comments
-- Send private DM after a comment trigger
-- Specific-post automations
-- Global keyword automations
-- Reply-all mode for selected posts
-- Public comment reply like “Check your DMs”
-- Comment-to-DM funnels for lead magnets, links, offers, downloads, coupons, courses, and products
-
-### 📖 Instagram Story Automation
-
-- Story mention automation
-- Story reply automation
-- Story reaction automation
-- Emoji reaction triggers
-- Specific story matching support
-- Automatic DM responses for story engagement
-
-### 🤖 AI Instagram Auto-Replies
-
-- AI fallback when no keyword automation matches
-- Custom AI personality context per account
-- Reads recent conversation history
-- Matches language and tone: English, Hindi, Hinglish, casual, formal
-- Short human-like replies
-- Typing indicators
-- Random delay before response for more natural behavior
-- Proxy-based AI gateway support via `/api/groq/chat`
-
-### 🧊 Instagram Ice Breakers
-
-- Add up to 4 Instagram Ice Breakers
-- Save question + auto-response
-- Sync Ice Breakers to Instagram Messenger profile
-- Handle Ice Breaker postback responses in webhook
-
-### 📥 Built-in Inbox
-
-- Conversation list
-- Message history
-- Manual DM replies
-- Store incoming and outgoing Instagram messages
-- Useful for creators who want automation plus manual support
-
-### 📊 Dashboard
-
-- Automation count
-- Active triggers
-- Audience reached
-- Messages sent
-- Recent activity
-- Quick view of account automation health
-
----
-
-## 🧱 Tech Stack
-
-- **Framework:** Next.js 16 App Router
-- **Frontend:** React 19, TypeScript
-- **Styling:** Tailwind CSS, shadcn/ui-style components
-- **Icons:** Lucide React
-- **Database:** Supabase Postgres
-- **Storage:** Supabase Storage
-- **Deployment:** Vercel
-- **Analytics:** Vercel Analytics
-- **Instagram API:** Instagram API with Instagram Login, Graph API v24.0
-- **AI Gateway:** Groq/OpenAI-compatible proxy pattern
-
----
-
-## 🏗️ Architecture
+## 🧭 어떻게 동작하나요?
 
 ```txt
-Instagram User
-     ↓
-Instagram Webhook
-     ↓
-Next.js API Routes
-     ↓
-Automation Matcher
-     ↓
-Supabase Database
-     ↓
-Instagram Graph API Reply
+누군가 내 인스타로 DM / 댓글 / 스토리 답장을 보냄
+        ↓ (Instagram이 웹훅으로 알려줌)
+내 앱 (Vercel 서버) 이 등록된 규칙과 대조
+        ↓
+내 Supabase에 기록 + Instagram API로 자동 답장 발송
 ```
 
-Important modules:
+- 모든 데이터(대화·토큰·규칙)는 **오직 내 Supabase 프로젝트에만** 저장됩니다.
+- 서버는 **내 Vercel**에서 24시간 돌아갑니다 (내 컴퓨터를 켜둘 필요 없음).
+- Instagram의 **공식 API**(Instagram API with Instagram Login)만 사용합니다 — 스크래핑/매크로 아님.
 
-```txt
-app/api/instagram/callback       OAuth login + token exchange
-app/api/instagram/webhook        DM/comment/story webhook brain
-app/api/instagram/media          User media list (reels, photos)
-app/api/automations              Automation CRUD
-app/api/ice-breakers             Ice Breaker management + sync
-app/api/inbox                    Conversations, messages, manual send
-app/api/groq                     AI auto-reply settings + chat proxy
-components/dashboard             Dashboard and automations UI
-components/inbox                 Live inbox UI
-lib/supabase-server.ts           Supabase server client (RLS-aware)
-lib/supabase-admin.ts            Service-role client (bypasses RLS)
-lib/supabase-migrate.ts          Runtime migration runner
-lib/unlock-tracking.ts           3-attempt gate-cap counter (RPC-backed)
-lib/instagram-api.ts             sendCardDM, sendTextDM, buildFollowGateCard, etc.
-schema.sql                       Canonical database schema (run in SQL editor)
-db                               Legacy schema fragment (see schema.sql)
-scripts/                         Legacy per-feature SQL migrations
-```
+## 🚀 시작하기
 
----
+### 방법 1 — 버튼으로 배포 (가장 쉬움, 추천)
 
-## ⚡ Quick Start: Self Host
+위의 **[Deploy with Vercel]** 버튼 → GitHub 로그인 → 저장소 이름 확인 → 환경변수 입력 → Deploy.
 
-### 1. Clone the repo
+준비 순서와 각 환경변수 값을 어디서 가져오는지는 아래 가이드에 그림처럼 정리해 두었습니다:
+
+> 📖 **[설치 가이드(docs/setup-guide.md)](docs/setup-guide.md)** — 이 문서만 따라 하세요!
+
+### 방법 2 — GitHub에서 Fork 후 Vercel에서 가져오기
+
+1. 이 저장소 우측 상단 **[Fork]** 클릭 → 내 계정에 복사본 생성
+2. [vercel.com/new](https://vercel.com/new) → 방금 만든 fork 선택 → 환경변수 입력 → Deploy
+
+### 방법 3 — 로컬에서 실행 (개발자용)
 
 ```bash
-git clone https://github.com/ayuuxh2/insta-p8.git
-cd insta-p8
-```
-
-### 2. Install dependencies
-
-```bash
+git clone https://github.com/pblsketch/dmflow-instaauto.git
+cd dmflow-instaauto
 npm install
+cp .env.example .env.local   # 값을 채우세요
+npm run dev                  # http://localhost:3000
 ```
 
-You can also use Bun or pnpm if that is your preferred package manager.
+> 로컬에서는 `NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=http://localhost:3000/api/instagram/callback` 로 설정하고, Meta 앱의 redirect URI 목록에도 같은 주소를 추가하세요.
 
-### 3. Create a Supabase project
+## 🔐 환경 변수 요약
 
-- Create a new project on Supabase
-- Copy your project URL
-- Copy anon key
-- Copy service role key
+| 변수 | 필수 | 설명 |
+|---|---|---|
+| `DASH_USER` / `DASH_PASS` | ✅ | 대시보드 접속 아이디/비밀번호 (**내가 직접 정함**). 미설정 시 사이트가 503으로 열리지 않습니다 |
+| `NEXT_PUBLIC_SUPABASE_URL` | ✅ | Supabase 프로젝트 URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅ | Supabase 공개 키 |
+| `SUPABASE_SERVICE_ROLE_KEY` | ✅ | Supabase 서버 전용 키 (⚠️ 절대 공개 금지) |
+| `NEXT_PUBLIC_INSTAGRAM_APP_ID` / `INSTAGRAM_APP_ID` | ✅ | Meta의 **Instagram 앱 ID** — Meta 앱 ID가 아님! |
+| `INSTAGRAM_APP_SECRET` | ✅ | Instagram 앱 시크릿 |
+| `NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI` | ✅ | OAuth 리다이렉트 주소 (`https://내주소/api/instagram/callback`) |
+| `INSTAGRAM_WEBHOOK_VERIFY_TOKEN` | ✅ | 웹훅 검증 토큰 (아무 긴 랜덤 문자열, Meta에 같은 값 입력) |
+| `META_APP_SECRET` | 선택 | 웹훅 서명 검증 401 오류가 날 때만 (Settings → Basic의 앱 시크릿) |
+| `GROQ_API_KEY` | 선택 | AI 자동 답장 사용 시 |
+| `AGENT_API_KEY` | 선택 | Muse·MCP 같은 AI 에이전트 연동 시 |
+| `PRIVACY_CONTACT_EMAIL` | 선택 | /privacy 페이지에 표시할 문의 이메일 |
 
-#### 3a. Apply the database schema
+자세한 설명: [`.env.example`](.env.example) · [설치 가이드](docs/setup-guide.md#3단계-vercel에-배포하기-10분)
 
-Run **`schema.sql`** in the Supabase SQL editor (**Database → SQL editor → New query**):
+## ⚡ 첫 자동화 만들기 (1분)
 
-```txt
-1. Open the Supabase dashboard for your project
-2. Click "SQL editor" in the left sidebar
-3. Click "New query"
-4. Paste the entire contents of schema.sql (project root)
-5. Click "Run" (or Ctrl+Enter)
-```
+1. 배포된 주소 접속 → `DASH_USER`/`DASH_PASS` 로그인
+2. **Instagram 연결하기** 클릭 → 인스타 로그인 → 권한 허용
+3. 왼쪽 메뉴 **자동 답장** →
+   - **반응 대상**: `DM(다이렉트 메시지)`
+   - **이런 말을 하면**: `가격`
+   - **이 답장 보내기**: `안녕하세요! 가격 안내는 프로필 링크를 확인해 주세요 😊`
+   - **[답장 저장]**
+4. 다른 계정으로 내 인스타에 `가격` 이라고 DM → 자동 답장 도착 ✅
 
-`schema.sql` is the canonical source of truth for the database. It is idempotent (every `CREATE` uses `IF NOT EXISTS`) and safe to re-run. The same file is also bundled into the Vercel serverless bundle and the runtime migration runner (`lib/supabase-migrate.ts`) runs the equivalent `CREATE TABLE / INDEX / EXTENSION` statements on every cold start, so new environments self-heal.
+**댓글 → DM** 은: 반응 대상 `게시물 댓글` → 대상 게시물 선택 → 감지 키워드 `자료` → "DM으로 보낼 내용" 입력 → (원하면) ☑ `팔로우 확인 후 보내기` → **[답장 저장]**.
 
-**One-time manual steps that the auto-migrator does NOT run** (applied automatically by `schema.sql` when you paste it into the SQL editor — they need the `anon` role, which the migration runner does not switch into):
+전체 예시와 팁은 [설치 가이드 6단계](docs/setup-guide.md#6단계-첫-자동화-만들기-5분)에서.
 
-- `CREATE POLICY` (per-user RLS policies)
-- `ALTER TABLE ... ENABLE ROW LEVEL SECURITY`
-- `CREATE OR REPLACE FUNCTION` (RPCs like `bump_unlock_attempt`)
+## ❓ 자주 묻는 질문
 
-#### 3b. Schedule the hourly cleanup (recommended)
+- **정말 무료인가요?** — 네. Supabase·Vercel 무료 요금제로 개인 계정 1개 운영은 충분합니다. 카드 등록 없이 시작 가능.
+- **컴퓨터를 계속 켜둬야 하나요?** — 아니요. Vercel 서버에서 24시간 동작합니다.
+- **내 데이터는 어디에 있나요?** — 오직 내 Supabase 프로젝트에만 저장되며, 운영자 본인만 볼 수 있습니다.
+- **여러 인스타 계정을 관리할 수 있나요?** — 이 앱은 1인 1계정 설계입니다. 계정마다 각각 배포하세요.
+- **배포했는데 503 "Auth not configured"가 떠요** — `DASH_USER`/`DASH_PASS` 미설정이 원인입니다. Vercel → Settings → Environment Variables에 추가 후 Redeploy.
+- **웹훅 검증이 실패해요** — `INSTAGRAM_WEBHOOK_VERIFY_TOKEN`이 Meta에 입력한 값과 같은지, 배포 주소가 맞는지 확인. [문제 해결 표](docs/setup-guide.md#문제-해결) 참고.
+- **봇으로 정지되지 않나요?** — 공식 API + 사용자 행동(메시지/댓글)에만 반응하는 방식이라 정책에 부합합니다. 단, 스팸성 사용은 인스타 정책 위반입니다.
 
-The follower-gate cap records unlock attempts in `public.unlock_attempts`. Stale entries (older than 24h) get cleaned up by either the read path or the `bump_unlock_attempt` RPC's `ON CONFLICT` clause, but a small footprint will still accumulate. Set up an hourly cleanup:
+## 🔄 업데이트 방법
 
-1. Open **Database → Extensions** in the Supabase dashboard
-2. Enable `pg_cron`
-3. Run this SQL once in the SQL editor:
+- 이 저장소를 **Fork**했다면: GitHub에서 **Sync fork** 버튼 → Vercel이 자동 재배포
+- **Deploy 버튼**으로 만든 내 저장소라면: GitHub에서 최신 변경사항 반영(또는 `git pull`) → Vercel 자동 재배포
 
-```sql
-SELECT cron.schedule('purge-unlock-attempts', '0 * * * *',
-  $$DELETE FROM public.unlock_attempts WHERE updated_at < NOW() - INTERVAL '24 hours'$$);
-```
+## 🙏 크레딧 & 라이선스
 
-To manually purge right now:
+이 프로젝트는 **[insta-p8](https://github.com/ayuuxh2/insta-p8)** ([@ayuuxh2](https://github.com/ayuuxh2), MIT License, © flexhunt) 을 기반으로 한국어 환경에 맞게 다듬은 버전입니다. 원본의 훌륭한 구조와 기능에 감사드립니다. 🙇
 
-```sql
-DELETE FROM public.unlock_attempts WHERE updated_at < NOW() - INTERVAL '24 hours';
-```
+- 라이선스: **MIT** ([LICENSE](LICENSE)) — 자유롭게 사용·수정·배포하세요.
+- 사용 시 Instagram 플랫폼 정책과 스팸 금지 규칙을 지켜주세요.
 
-#### 3c. Verify the install
+<details>
+<summary><b>English summary</b></summary>
 
-```sql
--- Should return 12 tables
-SELECT count(*) FROM information_schema.tables
-WHERE table_schema = 'public' AND table_type = 'BASE TABLE';
+**dmflow** is a self-hosted, Korean-localized Instagram automation app — DM auto-replies, comment-to-DM funnels, story triggers, AI replies (Groq/OpenAI-compatible), ice breakers, and a live inbox.
 
--- Should return the function
-SELECT proname FROM pg_proc WHERE proname = 'bump_unlock_attempt';
-```
+Built with Next.js 16 + Supabase + Vercel. Based on [insta-p8](https://github.com/ayuuxh2/insta-p8) (MIT, © flexhunt). You will need your own Instagram professional account, Meta developer app, Supabase project, and Vercel account.
 
-If either query returns 0, re-run `schema.sql` from the SQL editor.
+Deploy with the Vercel button above, or see the full walkthrough in [docs/setup-guide.md](docs/setup-guide.md) (Korean). Key env vars: `DASH_USER`/`DASH_PASS`, `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_INSTAGRAM_APP_ID`, `INSTAGRAM_APP_SECRET`, `INSTAGRAM_WEBHOOK_VERIFY_TOKEN`.
 
-### 4. Create a Meta / Instagram app
-
-You need an Instagram Business or Creator account and a Meta Developer app configured for Instagram Login and webhooks.
-
-Required Instagram scopes used by the app:
-
-```txt
-instagram_business_basic
-instagram_business_manage_messages
-instagram_business_manage_comments
-```
-
-### 5. Configure environment variables
-
-Create `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-
-NEXT_PUBLIC_INSTAGRAM_APP_ID=your_instagram_app_id
-INSTAGRAM_APP_ID=your_instagram_app_id
-INSTAGRAM_APP_SECRET=your_instagram_app_secret
-NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=http://localhost:3000/api/instagram/callback
-INSTAGRAM_WEBHOOK_VERIFY_TOKEN=choose_a_strong_verify_token
-
-GATEWAY_SECRET=your_ai_gateway_secret
-API_SECRET_KEY=your_internal_hook_secret
-```
-
-### 6. Run locally
-
-```bash
-npm run dev
-```
-
-Open:
-
-```txt
-http://localhost:3000
-```
-
----
-
-## 🔐 Environment Variables
-
-| Variable | Required | Description |
-|---|---:|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | ✅ | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | ✅ | Supabase anon/public key |
-| `SUPABASE_SERVICE_ROLE_KEY` | ✅ | Supabase service role key for API routes |
-| `NEXT_PUBLIC_INSTAGRAM_APP_ID` | ✅ | Public Instagram app/client ID |
-| `INSTAGRAM_APP_ID` | ✅ | Server-side Instagram app ID |
-| `INSTAGRAM_APP_SECRET` | ✅ | Instagram app secret for token exchange |
-| `NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI` | ✅ | OAuth redirect URI |
-| `INSTAGRAM_WEBHOOK_VERIFY_TOKEN` | ✅ | Webhook verification token |
-| `GATEWAY_SECRET` | Optional | Secret used for AI gateway/proxy calls |
-| `API_SECRET_KEY` | Optional | Internal API secret for publishing hooks |
-
-**Security note:** never expose `SUPABASE_SERVICE_ROLE_KEY`, `INSTAGRAM_APP_SECRET`, user access tokens, or `API_SECRET_KEY` in client-side code.
-
----
-
-## ▲ Deploy to Vercel
-
-1. Fork this repository
-2. Import it into Vercel
-3. Add all environment variables
-4. Set the production redirect URI in Meta Developer Console
-5. Set your webhook callback URL:
-
-```txt
-https://your-domain.com/api/instagram/webhook
-```
-
-6. Deploy
-7. Connect your Instagram Business/Creator account
-8. Create your first automation
-
----
-
-## 🧪 Testing Checklist
-
-Before going live, test these flows:
-
-- Login with Instagram Business/Creator account
-- Create a DM keyword automation
-- Send a test DM from another Instagram account
-- Create a comment keyword automation
-- Comment on a selected post
-- Confirm public comment reply + private DM
-- Add Ice Breakers and verify they sync
-- Toggle AI auto-reply and send an unmatched DM
-- Test inbox manual reply
-
----
-
-## ❓ FAQ
-
-### Is there a free alternative to ManyChat for Instagram?
-
-Yes — InstaAuto is a free, open-source ManyChat alternative. You self-host it on Vercel and Supabase free tiers, connect your Instagram Business or Creator account through the official Instagram API, and get DM keyword automation, comment-to-DM funnels, story-reply automation, and a live inbox without any monthly fee.
-
-### How do I automate Instagram DMs for free?
-
-Deploy InstaAuto (about 18 minutes with the [video guide](https://youtu.be/kIMQe__d37I)), connect your Instagram professional account, and create a keyword rule — for example, auto-reply to every DM containing "price". Replies can be text, images, quick-reply chips, or button cards.
-
-### How does comment-to-DM automation work?
-
-When someone comments a trigger word (like "link") on your post, Instagram sends a webhook to your deployment. InstaAuto posts a public reply ("Check your DMs!") and sends the commenter a private DM with your link or lead magnet — the same funnel ManyChat charges for.
-
-### Is this allowed by Instagram?
-
-Yes — InstaAuto uses the official Instagram API with Instagram Login and its approved permissions. Every reply is triggered by a user-initiated message or comment, within Instagram's messaging window rules. It does not scrape, mass-DM, or bypass rate limits.
-
-### Do I need a server?
-
-No dedicated server — it runs on Vercel serverless functions with a Supabase Postgres database. Both have free tiers that comfortably handle a creator account.
-
-### ManyChat vs Chatfuel vs InstaAuto?
-
-ManyChat and Chatfuel are excellent hosted products with polished UIs and paid plans. InstaAuto trades the polish for ownership: full source code, your own database, unlimited customization, and $0/month.
-
----
-
-## 📈 SEO Use Cases
-
-InstaAuto can be used as:
-
-- Free ManyChat alternative
-- Open-source ManyChat alternative
-- Free Chatfuel alternative for Instagram
-- Instagram DM automation tool
-- Instagram comment automation tool
-- Instagram chatbot platform
-- Instagram AI auto-reply bot
-- Instagram lead generation bot
-- Comment-to-DM automation tool
-- Instagram story automation software
-- Self-hosted social media automation
-- Instagram marketing automation dashboard
-- Creator automation CRM
-- Instagram inbox automation
-- Open-source Instagram API starter
-
----
-
-## ⚠️ Important Notes
-
-- Instagram APIs require correct Meta app permissions and review for production use.
-- Some features may require your Instagram account to be Business or Creator type.
-- Webhooks must be reachable from the public internet.
-- Hosted tester access may require approval depending on Meta app tester roles.
-- Respect Instagram Platform Terms and anti-spam policies.
-- Do not use automation to spam, deceive, scrape, or abuse users.
-
----
-
-## 🗺️ Roadmap
-
-- [ ] One-click Vercel deploy button
-- [ ] Docker setup
-- [ ] Better onboarding wizard
-- [ ] Automation templates
-- [ ] Multi-account workspace support
-- [ ] AI model selector
-- [ ] Better analytics charts
-- [ ] Webhook event debugger
-- [ ] Export/import automations
-- [x] Public demo video
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome.
-
-Join our **[Discord community](https://discord.gg/7J9E7bNvX)** for discussions, support, and updates!
-
-Join our **[Telegram group](https://t.me/instagramautomationp8)** for quick help, updates, and community chat!
-
-Good first issues:
-
-- Improve setup docs
-- Add Docker support
-- Add more automation templates
-- Improve dashboard analytics
-- Add tests for API routes
-- Improve webhook logging
-- Add provider-agnostic AI configuration
-
----
-
-## ❤️ Sponsors
-
-A huge thank you to our amazing sponsors for supporting this project!
-
-- [@Divypratap93](https://github.com/Divypratap93) — $10 🇬🇧
-
----
-
-
-## ⭐ Support
-
-If this project helps you avoid paying for expensive Instagram automation tools, please star the repo.
-
-Stars help more developers discover open-source Instagram automation, self-hosted creator tools, and AI-powered social media workflows.
-
----
-
-## 📄 License
-
-MIT License. Use it, fork it, self-host it, customize it, and build on top of it.
+</details>
